@@ -1,0 +1,48 @@
+{
+  "framework_summary": {
+    "input_energy_J": 1.637e-13,
+    "input_energy_eV": 1021735.0354892269,
+    "total_conversion_efficiency": 0.0,
+    "total_particles_created": 0.0,
+    "mass_created_kg": 0.0,
+    "primary_mechanism": "Schwinger",
+    "polymerization_scale": 0.2
+  },
+  "qed_analysis": {
+    "success": false,
+    "reason": "Below threshold energy",
+    "threshold_eV": 1021997.8922,
+    "input_energy_eV": 1021735.0354892269
+  },
+  "schwinger_optimization": {
+    "optimal_field_strength_V_per_m": 1.3232723367126547e+28,
+    "field_ratio_to_critical": 9999900715.032698,
+    "achieved_production_rate": 0.0,
+    "target_production_rate": 1e+20,
+    "vacuum_energy_shift_J_per_m3": 12677734830814.857,
+    "optimization_success": true,
+    "power_density_estimate_W_per_m3": 3.298367470517666e+58
+  },
+  "qi_pulse_design": {
+    "energy_pulse_design": {
+      "optimal_amplitude": 65.30685130171453,
+      "optimal_width": 1e-15,
+      "qi_integral": 1.5042090030091224e+16,
+      "qi_threshold": -8.38621022351776e+31,
+      "constraint_satisfied": true,
+      "total_energy": 1.637e-13
+    },
+    "peak_energy_density_J_per_m3": 65.30685130171453,
+    "equivalent_field_strength_V_per_m": 3840785.076562807,
+    "pulse_width_seconds": 1e-15,
+    "qi_constraint_satisfied": true,
+    "practical_feasibility": "True"
+  },
+  "conservation_verified": false,
+  "theoretical_limits": {
+    "schwinger_critical_field": 1.323285474948166e+18,
+    "electron_pair_threshold_eV": 1021997.8922,
+    "proton_pair_threshold_eV": 1876544162.6,
+    "qi_constraint_satisfied": true
+  }
+}

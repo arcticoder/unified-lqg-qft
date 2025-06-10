@@ -1,0 +1,68 @@
+{
+  "qed": {
+    "cross_section_barns": 0.0,
+    "running_coupling": 0.007305190835772683,
+    "threshold_met": false,
+    "cms_energy_eV": 1021735.0354892269
+  },
+  "schwinger": {
+    "field_strength_V_per_m": 6080859549915.016,
+    "field_ratio_to_critical": 4.595274160440102e-06,
+    "production_rate": 0.0,
+    "instanton_enhancement": 0.0,
+    "expected_pairs": 0.0
+  },
+  "qi_optimization": {
+    "success": true,
+    "peak_energy_density": 65.30685130171453,
+    "pulse_width": 1e-15,
+    "equivalent_field_V_per_m": 3840785.076562807,
+    "field_feasible": "True"
+  },
+  "particle_creation": {
+    "particles_created": 0,
+    "particle_details": [],
+    "conservation_verified": {
+      "all_conserved": false,
+      "details": {
+        "energy": false,
+        "charge": true,
+        "lepton_number": true,
+        "momentum": true
+      },
+      "initial_totals": {
+        "energy": 1021735.0354892269,
+        "charge": 0,
+        "lepton_number": 0,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "final_totals": {
+        "energy": 0,
+        "charge": 0,
+        "lepton_number": 0,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "summary": {
+    "input_energy_J": 1.637e-13,
+    "input_energy_eV": 1021735.0354892269,
+    "particles_created": 0,
+    "conversion_efficiency": 0.0,
+    "primary_mechanism": "Schwinger",
+    "all_conservation_satisfied": false,
+    "theoretical_validation": {
+      "qed_threshold_met": false,
+      "schwinger_field_achievable": "True",
+      "qi_constraints_satisfied": true
+    }
+  }
+}

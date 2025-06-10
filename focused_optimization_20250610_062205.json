@@ -1,0 +1,60 @@
+{
+  "results": {
+    "0.1": {
+      "1.637e-13": {
+        "efficiency": 0.0,
+        "particles": 0,
+        "conservation_ok": false
+      },
+      "1.637e-12": {
+        "efficiency": 0.1000257265045871,
+        "particles": 2,
+        "conservation_ok": true
+      },
+      "1.637e-11": {
+        "efficiency": 0.010002572650458709,
+        "particles": 2,
+        "conservation_ok": true
+      }
+    },
+    "0.2": {
+      "1.637e-13": {
+        "efficiency": 0.0,
+        "particles": 0,
+        "conservation_ok": false
+      },
+      "1.637e-12": {
+        "efficiency": 0.1000257265045871,
+        "particles": 2,
+        "conservation_ok": true
+      },
+      "1.637e-11": {
+        "efficiency": 0.010002572650458709,
+        "particles": 2,
+        "conservation_ok": true
+      }
+    },
+    "0.5": {
+      "1.637e-13": {
+        "efficiency": 0.0,
+        "particles": 0,
+        "conservation_ok": false
+      },
+      "1.637e-12": {
+        "efficiency": 0.1000257265045871,
+        "particles": 2,
+        "conservation_ok": true
+      },
+      "1.637e-11": {
+        "efficiency": 0.010002572650458709,
+        "particles": 2,
+        "conservation_ok": true
+      }
+    }
+  },
+  "best_efficiency": 0.1000257265045871,
+  "best_parameters": {
+    "mu": 0.1,
+    "energy_J": 1.637e-12
+  }
+}

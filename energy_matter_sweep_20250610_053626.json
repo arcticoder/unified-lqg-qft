@@ -1,0 +1,210 @@
+{
+  "sweep_results": {
+    "0.1": {
+      "1.637e-13": {
+        "efficiency": 0.0,
+        "particles_created": 0.0,
+        "mass_created_kg": 0.0,
+        "qed_success": false,
+        "qi_feasible": "True"
+      },
+      "1.637e-12": {
+        "efficiency": 0.10002572726724357,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-11": {
+        "efficiency": 0.010002572726724356,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-10": {
+        "efficiency": 0.0010002572726724357,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-09": {
+        "efficiency": 0.00010002572726724356,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      }
+    },
+    "0.2": {
+      "1.637e-13": {
+        "efficiency": 0.0,
+        "particles_created": 0.0,
+        "mass_created_kg": 0.0,
+        "qed_success": false,
+        "qi_feasible": "True"
+      },
+      "1.637e-12": {
+        "efficiency": 0.10002572726724357,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-11": {
+        "efficiency": 0.010002572726724356,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-10": {
+        "efficiency": 0.0010002572726724357,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-09": {
+        "efficiency": 0.00010002572726724356,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      }
+    },
+    "0.3": {
+      "1.637e-13": {
+        "efficiency": 0.0,
+        "particles_created": 0.0,
+        "mass_created_kg": 0.0,
+        "qed_success": false,
+        "qi_feasible": "True"
+      },
+      "1.637e-12": {
+        "efficiency": 0.10002572726724357,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-11": {
+        "efficiency": 0.010002572726724356,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-10": {
+        "efficiency": 0.0010002572726724357,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-09": {
+        "efficiency": 0.00010002572726724356,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      }
+    },
+    "0.5": {
+      "1.637e-13": {
+        "efficiency": 0.0,
+        "particles_created": 0.0,
+        "mass_created_kg": 0.0,
+        "qed_success": false,
+        "qi_feasible": "True"
+      },
+      "1.637e-12": {
+        "efficiency": 0.10002572726724357,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-11": {
+        "efficiency": 0.010002572726724356,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-10": {
+        "efficiency": 0.0010002572726724357,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-09": {
+        "efficiency": 0.00010002572726724356,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      }
+    },
+    "1.0": {
+      "1.637e-13": {
+        "efficiency": 0.0,
+        "particles_created": 0.0,
+        "mass_created_kg": 0.0,
+        "qed_success": false,
+        "qi_feasible": "True"
+      },
+      "1.637e-12": {
+        "efficiency": 0.10002572726724357,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-11": {
+        "efficiency": 0.010002572726724356,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-10": {
+        "efficiency": 0.0010002572726724357,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      },
+      "1.637e-09": {
+        "efficiency": 0.00010002572726724356,
+        "particles_created": 2.0,
+        "mass_created_kg": 1.8218767403e-30,
+        "qed_success": true,
+        "qi_feasible": "True"
+      }
+    }
+  },
+  "best_efficiency": 0.10002572726724357,
+  "best_parameters": {
+    "mu": 0.1,
+    "energy_J": 1.637e-12
+  },
+  "parameter_ranges": {
+    "energy_range_J": [
+      1.637e-13,
+      1.637e-12,
+      1.637e-11,
+      1.637e-10,
+      1.637e-09
+    ],
+    "polymerization_scales": [
+      0.1,
+      0.2,
+      0.3,
+      0.5,
+      1.0
+    ]
+  }
+}
