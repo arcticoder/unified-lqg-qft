@@ -136,33 +136,33 @@ class UltimateReplicatorSimulator:
                 (self.config.mu_polymer**2 * self.config.M_mass**2) / \
                 (6 * jnp.maximum(r, 1e-6)**4)
         
-        # Gaussian enhancement
-        gaussian_enhancement = self.config.alpha_enhancement * \
+        # Gaussian enhancement        gaussian_enhancement = self.config.alpha_enhancement * \
                              jnp.exp(-(r/self.config.R0_scale)**2)
         
         return f_lqg + gaussian_enhancement
     
     def compute_ricci_3d(self, f3d: jnp.ndarray) -> jnp.ndarray:
         """
-        Compute 3D Ricci scalar using finite differences
+        Compute 3D Ricci scalar using finite differences with enhanced stability
         """
-        # Simple finite difference approximation for spherically symmetric case
-        # In full 3D, this would require more sophisticated tensor calculations
+        # Get radial coordinate with strong regularization
         r_3d = jnp.linalg.norm(self.grid, axis=-1)
-        r_3d = jnp.maximum(r_3d, 1e-6)  # Avoid singularities
+        r_3d = jnp.maximum(r_3d, 1e-2)  # Stronger regularization
         
         # Approximate Ricci scalar for spherically symmetric metric
-        f = f3d
+        f = jnp.maximum(f3d, 1e-6)  # Ensure positive metric
         
-        # Finite difference derivatives
+        # Finite difference derivatives with regularization
         dr = self.dx
         f_r = jnp.gradient(f, dr, axis=0)  # Simplified radial derivative
         f_rr = jnp.gradient(f_r, dr, axis=0)
         
-        # Ricci scalar approximation
+        # Ricci scalar approximation with strong bounds
         R = -f_rr / (2 * f**2) + (f_r**2) / (4 * f**3)
         
-        return jnp.nan_to_num(R, nan=0.0, posinf=1e6, neginf=-1e6)
+        # Much stronger regularization to prevent numerical explosions
+        R = jnp.clip(R, -1e3, 1e3)  # Tighter bounds
+        return jnp.nan_to_num(R, nan=0.0, posinf=1e3, neginf=-1e3)
     
     def compute_3d_laplacian(self, phi: jnp.ndarray) -> jnp.ndarray:
         """
@@ -196,18 +196,31 @@ class UltimateReplicatorSimulator:
         
         pi_dot = laplacian_phi - coupling_term
         
-        # Symplectic update
-        phi_new = phi + dt * phi_dot
+        # Symplectic update        phi_new = phi + dt * phi_dot
         pi_new = pi + dt * pi_dot
         
         return phi_new, pi_new
     
     def compute_creation_rate(self, phi: jnp.ndarray, pi: jnp.ndarray) -> float:
         """
-        Compute matter creation rate: Ṅ = 2λ Σᵢ Rᵢ φᵢ πᵢ Δr
+        Compute matter creation rate with enhanced numerical stability
+        Ṅ = 2λ Σᵢ Rᵢ φᵢ πᵢ Δr³
         """
-        creation_density = 2 * self.config.lambda_coupling * self.R3d * phi * pi
+        # Strong regularization of all inputs
+        phi_reg = jnp.clip(phi, -1.0, 1.0)
+        pi_reg = jnp.clip(pi, -1.0, 1.0) 
+        R_reg = jnp.clip(self.R3d, -1e3, 1e3)
+        
+        # Creation density calculation
+        creation_density = 2 * self.config.lambda_coupling * R_reg * phi_reg * pi_reg
+        
+        # Volume integration with overflow protection
         total_creation = jnp.sum(creation_density) * (self.dx**3)
+        
+        # Final regularization and NaN protection
+        total_creation = jnp.clip(total_creation, -1e6, 1e6)
+        total_creation = jnp.nan_to_num(total_creation, nan=0.0, posinf=1e6, neginf=-1e6)
+        
         return float(total_creation)
     
     def apply_qec_if_needed(self, phi: jnp.ndarray, pi: jnp.ndarray) -> Tuple[jnp.ndarray, jnp.ndarray]:
