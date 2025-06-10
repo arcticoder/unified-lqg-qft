@@ -1,0 +1,20 @@
+numpy>=1.21.0
+scipy>=1.7.0
+matplotlib>=3.5.0
+sympy>=1.9.0
+networkx>=2.6.0
+setuptools>=60.0.0
+pytest>=6.0.0
+
+# Additional dependencies for advanced features
+jax>=0.4.0  # For JAX-based GPU acceleration
+jaxlib>=0.4.0  # JAX linear algebra library
+torch>=2.0.0  # PyTorch for ML/GPU operations
+pyvista>=0.40.0  # 3D visualization
+vtk>=9.2.0  # Visualization toolkit
+dolfin-adjoint>=2023.0.0  # FEniCS for finite element methods (optional)
+fenics>=2019.1.0  # FEniCS core (optional)
+h5py>=3.7.0  # HDF5 for data storage
+tqdm>=4.64.0  # Progress bars
+dataclasses>=0.8  # Dataclass support (Python < 3.7)
+typing-extensions>=4.0.0  # Extended typing support

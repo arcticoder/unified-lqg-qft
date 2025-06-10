@@ -6,5 +6,8 @@
 		{
 			"path": "../lqg-anec-framework"
 		}
-	]
+	],
+	"settings": {
+		"powershell.cwd": "unified-lqg-qft"
+	}
 }
