@@ -2,33 +2,33 @@
   "48": {
     "grid_points": 110592,
     "memory_gb": 0.006591796875,
-    "avg_step_time_ms": 32.60934114456177,
-    "throughput_pts_per_sec": 3391420.866485165,
-    "memory_usage_percent": 51.5,
-    "steps_per_second": 30.66605962895295
+    "avg_step_time_ms": 31.726198196411133,
+    "throughput_pts_per_sec": 3485825.793413538,
+    "memory_usage_percent": 49.7,
+    "steps_per_second": 31.519692142411188
   },
   "64": {
     "grid_points": 262144,
     "memory_gb": 0.015625,
-    "avg_step_time_ms": 48.7471866607666,
-    "throughput_pts_per_sec": 5377623.160578874,
-    "memory_usage_percent": 51.5,
-    "steps_per_second": 20.5140043662219
+    "avg_step_time_ms": 45.93608617782593,
+    "throughput_pts_per_sec": 5706711.690351648,
+    "memory_usage_percent": 49.7,
+    "steps_per_second": 21.769377480894654
   },
   "80": {
     "grid_points": 512000,
     "memory_gb": 0.030517578125,
-    "avg_step_time_ms": 76.63002490997314,
-    "throughput_pts_per_sec": 6681454.176760484,
-    "memory_usage_percent": 51.6,
-    "steps_per_second": 13.04971518898532
+    "avg_step_time_ms": 74.27218914031982,
+    "throughput_pts_per_sec": 6893562.798219081,
+    "memory_usage_percent": 49.8,
+    "steps_per_second": 13.463989840271642
   },
   "96": {
     "grid_points": 884736,
     "memory_gb": 0.052734375,
-    "avg_step_time_ms": 122.0047116279602,
-    "throughput_pts_per_sec": 7251654.368053457,
-    "memory_usage_percent": 51.6,
-    "steps_per_second": 8.196404767132181
+    "avg_step_time_ms": 120.29047727584839,
+    "throughput_pts_per_sec": 7354996.172898509,
+    "memory_usage_percent": 49.9,
+    "steps_per_second": 8.313210011685417
   }
 }

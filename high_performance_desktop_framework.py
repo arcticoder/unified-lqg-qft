@@ -377,13 +377,12 @@ def generate_high_performance_report(stats, hardware_info):
             }
         }
     }
-    
-    # Save comprehensive report
+      # Save comprehensive report
     with open("high_performance_desktop_report.json", "w") as f:
         json.dump(report, f, indent=2)
     
     # Generate executive summary
-    with open("high_performance_summary.md", "w") as f:
+    with open("high_performance_summary.md", "w", encoding='utf-8') as f:
         f.write("# High-Performance Desktop 3D Replicator Report\\n\\n")
         f.write(f"**Generated:** {report['high_performance_desktop_report']['timestamp']}\\n\\n")
         
@@ -400,7 +399,7 @@ def generate_high_performance_report(stats, hardware_info):
         f.write(f"- **Grid Size:** {stats['grid_size']}³ = {stats['grid_points']:,} points\\n")
         f.write(f"- **Total Steps:** {stats['total_steps']:,}\\n")
         f.write(f"- **Evolution Time:** {stats['total_time']:.1f} seconds\\n")
-        f.write(f"- **Final φ RMS:** {stats['final_phi_rms']:.2e}\\n")
+        f.write(f"- **Final Phi RMS:** {stats['final_phi_rms']:.2e}\\n")
         f.write(f"- **Numerical Stability:** {report['high_performance_desktop_report']['validation_status']['numerical_stability']}\\n\\n")
         
         f.write("## Scaling Potential\\n")
