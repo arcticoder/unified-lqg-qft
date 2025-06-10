@@ -1,0 +1,17 @@
+{
+  "framework": "Ultimate GPU Accelerated",
+  "backend": "NumPy",
+  "grid_size": 64,
+  "total_points": 262144,
+  "memory_estimate_mb": 12.0,
+  "benchmark_time_s": 0.304614782333374,
+  "avg_iteration_time_s": 0.026453256607055664,
+  "points_per_second": 8605754.388935285,
+  "points_per_second_millions": 8.605754388935285,
+  "stability_score": 1.0,
+  "stable_iterations": 10,
+  "cpu_usage_percent": 33.1,
+  "memory_usage_gb": 15.487274169921875,
+  "gpu_enabled": false,
+  "initialization_time_s": 0.0
+}

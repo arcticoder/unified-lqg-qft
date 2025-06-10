@@ -1,0 +1,21 @@
+{
+  "framework": "High-Performance Desktop",
+  "grid_size": 64,
+  "total_points": 262144,
+  "backend": "numpy",
+  "gpu_enabled": false,
+  "memory_estimate_mb": 12.0,
+  "initialization_time_s": 0.0,
+  "benchmark_time_s": 0.7076480388641357,
+  "avg_step_time_s": 0.02029789686203003,
+  "stable_steps": 20,
+  "total_steps": 20,
+  "stability_score": 1.0,
+  "points_per_second": 7408880.8447988955,
+  "points_per_second_millions": 7.408880844798896,
+  "cpu_usage_percent": 27.6,
+  "memory_usage_mb": 15964.45703125,
+  "gpu_usage_percent": 28.000000000000004,
+  "gpu_memory_mb": 1498.0,
+  "timestamp": "2025-06-10 05:26:21"
+}
