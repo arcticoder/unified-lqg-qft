@@ -5,6 +5,15 @@
 		},
 		{
 			"path": "../lqg-anec-framework"
+		},
+		{
+			"path": "../unified-lqg"
+		},
+		{
+			"path": "../warp-bubble-qft"
+		},
+		{
+			"path": "../warp-bubble-optimizer"
 		}
 	],
 	"settings": {
