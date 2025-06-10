@@ -1,0 +1,27 @@
+{
+  "test_type": "simple_3d_replicator",
+  "parameters": {
+    "mu": 0.2,
+    "lambda": 0.01
+  },
+  "results": {
+    "final_creation_rate": -25.343273933872382,
+    "max_field_amplitude": 6.191585647523246,
+    "max_curvature": 6746.409071147574,
+    "grid_size": [
+      32,
+      32,
+      32
+    ],
+    "spatial_domain": [
+      -3.0,
+      3.0
+    ]
+  },
+  "performance": {
+    "total_grid_points": 32768,
+    "evolution_steps": 500,
+    "time_step": 0.01
+  },
+  "status": "SUCCESSFUL"
+}
