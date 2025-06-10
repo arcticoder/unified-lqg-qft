@@ -162,20 +162,28 @@ The matter fields evolve according to polymer-modified Hamilton's equations:
 \dot{\pi} &= \nabla^2\phi - m^2\phi - 2\lambda\sqrt{f}R\phi
 \end{align}
 
-These equations preserve the canonical structure while incorporating curvature-driven forces.
+where the 3D Laplacian operator is implemented as:
+\begin{equation}
+\nabla^2\phi = \frac{\partial^2\phi}{\partial x^2} + \frac{\partial^2\phi}{\partial y^2} + \frac{\partial^2\phi}{\partial z^2}
+\end{equation}
+
+These equations preserve the canonical structure while incorporating curvature-driven forces across all three spatial dimensions.
 
 \section{Replicator Metric Technology}
 
 \subsection{Theoretical Foundation}
 
-The replicator metric represents a revolutionary advancement in controlled spacetime engineering:
+The replicator metric represents a revolutionary advancement in controlled spacetime engineering, now extended to full 3D:
 \begin{equation}
-f_{rep}(r) = f_{LQG}(r;\mu) + \alpha e^{-(r/R_0)^2}
+f(\mathbf{r}) = f_{\text{LQG}}(r) + \alpha e^{-(r/R_0)^2}
 \end{equation}
 
-where:
+where $\mathbf{r} = (x,y,z)$, $r = \|\mathbf{r}\|$, and:
 \begin{itemize}
-\item $f_{LQG}(r;\mu)$ provides the polymer-corrected baseline spacetime
+\item $f_{\text{LQG}}(r)$ provides the polymer-corrected baseline spacetime:
+\begin{equation}
+f_{\text{LQG}}(r) = 1 - \frac{2M}{r} + \frac{\mu^2 M^2}{6r^4}
+\end{equation}
 \item $\alpha$ controls the replication field strength
 \item $R_0$ sets the characteristic replication scale
 \item $\mu$ optimizes the polymer quantization parameter

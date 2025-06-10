@@ -103,6 +103,47 @@ Key functions:
 \item $R_0 \in [2.0, 4.0]$ - Characteristic scale (optimal: $R_0 = 3.0$)
 \end{itemize}
 
+\subsection{Spatial Discretization}
+
+\textbf{File:} \texttt{src/next\_generation\_replicator\_3d.py}
+
+The framework now supports full 3D spatial discretization with complete finite-difference operators:
+
+\textbf{3D Laplacian Implementation}:
+The 3D Laplacian operator is implemented using central finite differences:
+\begin{align}
+\nabla^2\phi &= \frac{\partial^2\phi}{\partial x^2} + \frac{\partial^2\phi}{\partial y^2} + \frac{\partial^2\phi}{\partial z^2} \\
+&= \frac{\phi_{i+1,j,k} - 2\phi_{i,j,k} + \phi_{i-1,j,k}}{(\Delta x)^2} \\
+&\quad + \frac{\phi_{i,j+1,k} - 2\phi_{i,j,k} + \phi_{i,j-1,k}}{(\Delta y)^2} \\
+&\quad + \frac{\phi_{i,j,k+1} - 2\phi_{i,j,k} + \phi_{i,j,k-1}}{(\Delta z)^2}
+\end{align}
+
+\textbf{3D Grid Structure}:
+\begin{itemize}
+\item Uniform Cartesian grid with spacing $\Delta x = \Delta y = \Delta z$
+\item Grid domain: $[-L, L]^3$ with $N^3$ total grid points
+\item Vectorized operations using JAX for GPU acceleration
+\item Periodic or absorbing boundary conditions
+\end{itemize}
+
+\textbf{3D Metric Extension}:
+The replicator metric ansatz is extended to full 3D:
+\begin{equation}
+f(\mathbf{r}) = f_{\text{LQG}}(r) + \alpha e^{-(r/R_0)^2}, \quad r = \|\mathbf{r}\|
+\end{equation}
+where $\mathbf{r} = (x,y,z)$ and the LQG component includes polymer corrections:
+\begin{equation}
+f_{\text{LQG}}(r) = 1 - \frac{2M}{r} + \frac{\mu^2 M^2}{6r^4}
+\end{equation}
+
+Key functions:
+\begin{itemize}
+\item \texttt{compute\_3d\_laplacian(phi, dx)} - Full 3D finite-difference Laplacian
+\item \texttt{metric\_3d(grid, params)} - Vectorized 3D metric computation
+\item \texttt{ricci\_3d(f3d, dx)} - 3D discrete Ricci scalar
+\item \texttt{evolution\_step\_3d(phi, pi, f3d, R3d, ...)} - 3D field evolution
+\end{itemize}
+
 \section{Unified Pipeline Architecture}
 
 \begin{center}
