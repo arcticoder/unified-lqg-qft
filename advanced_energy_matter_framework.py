@@ -1296,11 +1296,10 @@ class CompleteEinsteinEquations:
         
         # LQG holonomy corrections
         mu = self.lqg.polymer_scale
-        volume_correction = np.sqrt(self.lqg.volume_eigenvalue)
-        
+        volume_correction = np.sqrt(self.lqg.volume_eigenvalue)        
         # Add discrete geometry corrections
         lqg_correction = np.zeros_like(einstein)
-          for mu_idx in range(4):
+        for mu_idx in range(4):
             for nu_idx in range(4):
                 # Volume quantization effects
                 quantum_correction = (mu * self.pc.l_Planck / self.pc.c**2) * metric[mu_idx, nu_idx]
