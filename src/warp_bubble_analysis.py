@@ -698,6 +698,393 @@ class WarpBubbleAnalysis:
         return linearized_stability(phi_0, pi_0, mu, grid_shape, dt, dx, steps)
 
 
-if __name__ == "__main__":
-    # Run the complete analysis
-    results = run_warp_analysis()
+# ------------------------------------------
+# 7. MATTER CREATION INTEGRATION (June 2025)
+# Integration with matter_polymer.py for replicator physics
+# ------------------------------------------
+
+def matter_replication_analysis(mu_vals, tau_vals, R_vals, 
+                               lambda_vals, alpha_vals,
+                               sigma=0.5, omega=2*np.pi):
+    """
+    Comprehensive matter replication analysis with polymer quantization.
+    
+    Extended parameter sweep including:
+    - μ: Polymer scale parameter  
+    - λ: Matter-geometry coupling
+    - α: Curvature pulse strength
+    - R: Bubble radius
+    - τ: Sampling timescale
+    
+    Based on parameter sweep results showing optimal region:
+    μ ≈ 0.20, λ ≈ 0.01, α ≈ 2.0, R ≈ 1.0
+    
+    Args:
+        mu_vals (list): Polymer parameters to scan
+        tau_vals (list): Sampling timescales to scan  
+        R_vals (list): Bubble radii to scan
+        lambda_vals (list): Coupling strengths to scan
+        alpha_vals (list): Curvature pulse strengths to scan
+        sigma (float): Shell width
+        omega (float): Frequency
+        
+    Returns:
+        dict: Complete analysis results including matter creation rates
+    """
+    results = {}
+    matter_creation = {}
+    total_combinations = len(mu_vals) * len(tau_vals) * len(R_vals) * len(lambda_vals) * len(alpha_vals)
+    count = 0
+    
+    print("Running comprehensive matter replication analysis...")
+    print(f"Total parameter combinations: {total_combinations}")
+    
+    for mu in mu_vals:
+        for tau in tau_vals:
+            for R in R_vals:
+                for lam in lambda_vals:
+                    for alpha in alpha_vals:
+                        count += 1
+                        if count % 100 == 0:
+                            print(f"Progress: {count}/{total_combinations}")
+                        
+                        # Enhanced amplitude with curvature pulse strength
+                        A = alpha * (np.pi / (2 * mu))
+                        
+                        # Compute standard ANEC integral
+                        I_val = compute_I_3d(mu, tau, R, sigma, A, omega)
+                        
+                        # Compute matter creation rate
+                        # Mock field configuration for demonstration
+                        r_test = np.linspace(0, 2*R, 100)
+                        phi_test = A * np.exp(-(r_test - R)**2 / (2 * sigma**2))
+                        pi_test = 0.1 * A * np.sin(omega * 0.5) * np.exp(-(r_test - R)**2 / (2 * sigma**2))
+                        R_curv_test = -alpha * np.exp(-(r_test - R)**2 / (2 * sigma**2))
+                        
+                        # Matter creation rate: Ṅ = 2λ ∑ R φ π
+                        creation_rate = 2 * lam * np.sum(R_curv_test * phi_test * pi_test) * (r_test[1] - r_test[0])
+                        
+                        # Store results
+                        key = (mu, tau, R, lam, alpha)
+                        results[key] = I_val
+                        matter_creation[key] = creation_rate
+    
+    # Find optimal parameters
+    best_creation_key = max(matter_creation, key=matter_creation.get)
+    best_anec_key = min(results, key=results.get)  # Most negative ANEC
+    
+    optimal_results = {
+        'results': results,
+        'matter_creation': matter_creation,
+        'best_creation_params': {
+            'mu': best_creation_key[0],
+            'tau': best_creation_key[1], 
+            'R': best_creation_key[2],
+            'lambda': best_creation_key[3],
+            'alpha': best_creation_key[4],
+            'creation_rate': matter_creation[best_creation_key]
+        },
+        'best_anec_params': {
+            'mu': best_anec_key[0],
+            'tau': best_anec_key[1],
+            'R': best_anec_key[2], 
+            'lambda': best_anec_key[3] if len(best_anec_key) > 3 else 0.01,
+            'alpha': best_anec_key[4] if len(best_anec_key) > 4 else 2.0,
+            'anec_violation': results[best_anec_key]
+        },
+        'parameter_count': total_combinations
+    }
+    
+    return optimal_results
+
+def replicator_feasibility_study(optimal_params, cavity_volume=1e-6):
+    """
+    Analyze matter replication feasibility using optimal parameters.
+    
+    Compares energy requirements vs available negative energy sources.
+    
+    Args:
+        optimal_params (dict): Optimal parameter set from analysis
+        cavity_volume (float): Cavity volume for energy calculations (m³)
+        
+    Returns:
+        dict: Feasibility analysis results
+    """
+    mu = optimal_params['mu']
+    tau = optimal_params['tau']
+    R = optimal_params['R']
+    lam = optimal_params.get('lambda', 0.01)
+    alpha = optimal_params.get('alpha', 2.0)
+    
+    # Energy requirements
+    qi_bound = polymer_QI_bound(mu, tau)
+    shell_volume = 4 * np.pi * R**2 * 0.5  # Assuming 0.5m shell thickness
+    required_energy = abs(qi_bound) * shell_volume
+    
+    # Available energy from squeezed vacuum
+    # Use reasonable squeezing parameters
+    r_squeeze = 2.0  # Moderate squeezing
+    omega = 2 * np.pi * 1e12  # THz frequency
+    available_energy = abs(squeezed_vacuum_energy(r_squeeze, omega, cavity_volume)) * cavity_volume
+    
+    # Matter creation efficiency
+    creation_rate = optimal_params.get('creation_rate', 0)
+    
+    # Feasibility metrics
+    energy_ratio = available_energy / required_energy if required_energy > 0 else 0
+    efficiency = creation_rate / required_energy if required_energy > 0 else 0
+    
+    feasibility = {
+        'required_energy_J': required_energy,
+        'available_energy_J': available_energy,
+        'energy_ratio': energy_ratio,
+        'feasible': energy_ratio >= 1.0,
+        'creation_rate': creation_rate,
+        'efficiency': efficiency,
+        'polymer_enhancement': mu / 0.1,  # Relative to reference scale
+        'curvature_strength': alpha,
+        'optimal_bubble_size': R,
+        'coupling_strength': lam,
+        'recommendation': 'FEASIBLE' if energy_ratio >= 1.0 else 'REQUIRES_ENHANCEMENT'
+    }
+    
+    return feasibility
+
+def visualize_replication_analysis(analysis_results, feasibility_results):
+    """
+    Enhanced visualization including matter creation analysis.
+    
+    Args:
+        analysis_results (dict): Results from matter_replication_analysis
+        feasibility_results (dict): Results from replicator_feasibility_study
+        
+    Returns:
+        matplotlib.figure.Figure: Enhanced analysis figure
+    """
+    fig, axes = plt.subplots(3, 3, figsize=(18, 15))
+    plt.suptitle("Matter Replication Analysis with Polymer Quantization", fontsize=16)
+    
+    # Extract results
+    results = analysis_results['results']
+    creation_rates = analysis_results['matter_creation']
+    best_creation = analysis_results['best_creation_params']
+    best_anec = analysis_results['best_anec_params']
+    
+    # Panel 1: ANEC violation vs μ
+    ax1 = axes[0,0]
+    mu_vals = sorted(set([k[0] for k in results.keys()]))
+    anec_by_mu = {}
+    for mu in mu_vals:
+        mu_results = [results[k] for k in results.keys() if k[0] == mu]
+        anec_by_mu[mu] = np.mean(mu_results)
+    
+    ax1.plot(list(anec_by_mu.keys()), list(anec_by_mu.values()), 'bo-')
+    ax1.axvline(best_creation['mu'], color='r', linestyle='--', label='Optimal μ')
+    ax1.set_xlabel('Polymer Parameter μ')
+    ax1.set_ylabel('Mean ANEC Violation')
+    ax1.set_title('ANEC vs Polymer Parameter')
+    ax1.legend()
+    ax1.grid(True)
+    
+    # Panel 2: Matter creation vs λ  
+    ax2 = axes[0,1]
+    lambda_vals = sorted(set([k[3] for k in creation_rates.keys()]))
+    creation_by_lambda = {}
+    for lam in lambda_vals:
+        lam_results = [creation_rates[k] for k in creation_rates.keys() if k[3] == lam]
+        creation_by_lambda[lam] = np.mean(lam_results)
+    
+    ax2.plot(list(creation_by_lambda.keys()), list(creation_by_lambda.values()), 'go-')
+    ax2.axvline(best_creation['lambda'], color='r', linestyle='--', label='Optimal λ')
+    ax2.set_xlabel('Coupling Strength λ')
+    ax2.set_ylabel('Mean Creation Rate')
+    ax2.set_title('Matter Creation vs Coupling')
+    ax2.legend()
+    ax2.grid(True)
+    
+    # Panel 3: Energy feasibility
+    ax3 = axes[0,2]
+    feasibility = feasibility_results
+    categories = ['Required', 'Available']
+    energies = [feasibility['required_energy_J'], feasibility['available_energy_J']]
+    colors = ['red', 'green']
+    bars = ax3.bar(categories, energies, color=colors, alpha=0.7)
+    ax3.set_ylabel('Energy (J)')
+    ax3.set_title(f"Energy Analysis (Ratio: {feasibility['energy_ratio']:.2f})")
+    ax3.set_yscale('log')
+    
+    # Add feasibility text
+    status = feasibility['recommendation']
+    ax3.text(0.5, 0.8, status, transform=ax3.transAxes, 
+             ha='center', fontsize=12, fontweight='bold',
+             color='green' if 'FEASIBLE' in status else 'red')
+    
+    # Panel 4: Creation rate vs α
+    ax4 = axes[1,0]
+    alpha_vals = sorted(set([k[4] for k in creation_rates.keys()]))
+    creation_by_alpha = {}
+    for alpha in alpha_vals:
+        alpha_results = [creation_rates[k] for k in creation_rates.keys() if k[4] == alpha]
+        creation_by_alpha[alpha] = np.mean(alpha_results)
+    
+    ax4.plot(list(creation_by_alpha.keys()), list(creation_by_alpha.values()), 'mo-')
+    ax4.axvline(best_creation['alpha'], color='r', linestyle='--', label='Optimal α')
+    ax4.set_xlabel('Curvature Strength α')
+    ax4.set_ylabel('Mean Creation Rate')
+    ax4.set_title('Creation vs Curvature Strength')
+    ax4.legend()
+    ax4.grid(True)
+    
+    # Panel 5: Parameter correlation heatmap
+    ax5 = axes[1,1]
+    # Create correlation data for μ vs λ
+    mu_lambda_grid = {}
+    for (mu, tau, R, lam, alpha), rate in creation_rates.items():
+        if (mu, lam) not in mu_lambda_grid:
+            mu_lambda_grid[(mu, lam)] = []
+        mu_lambda_grid[(mu, lam)].append(rate)
+    
+    # Average rates for each (μ,λ) combination
+    for key in mu_lambda_grid:
+        mu_lambda_grid[key] = np.mean(mu_lambda_grid[key])
+    
+    # Create grid for visualization
+    unique_mu = sorted(set([k[0] for k in mu_lambda_grid.keys()]))
+    unique_lambda = sorted(set([k[1] for k in mu_lambda_grid.keys()]))
+    
+    if len(unique_mu) > 1 and len(unique_lambda) > 1:
+        grid_data = np.zeros((len(unique_mu), len(unique_lambda)))
+        for i, mu in enumerate(unique_mu):
+            for j, lam in enumerate(unique_lambda):
+                if (mu, lam) in mu_lambda_grid:
+                    grid_data[i, j] = mu_lambda_grid[(mu, lam)]
+        
+        im = ax5.imshow(grid_data, aspect='auto', cmap='viridis')
+        ax5.set_xticks(range(len(unique_lambda)))
+        ax5.set_xticklabels([f'{lam:.3f}' for lam in unique_lambda])
+        ax5.set_yticks(range(len(unique_mu)))
+        ax5.set_yticklabels([f'{mu:.2f}' for mu in unique_mu])
+        ax5.set_xlabel('Coupling λ')
+        ax5.set_ylabel('Polymer μ')
+        ax5.set_title('Creation Rate Heatmap')
+        plt.colorbar(im, ax=ax5)
+    
+    # Panel 6: Optimal field profile
+    ax6 = axes[1,2]
+    # Generate optimal field configuration
+    r_opt = np.linspace(0, 2*best_creation['R'], 200)
+    R_opt = best_creation['R']
+    alpha_opt = best_creation['alpha']
+    mu_opt = best_creation['mu']
+    
+    phi_opt = alpha_opt * (np.pi/(2*mu_opt)) * np.exp(-(r_opt - R_opt)**2 / (2 * 0.5**2))
+    pi_opt = 0.1 * alpha_opt * (np.pi/(2*mu_opt)) * np.exp(-(r_opt - R_opt)**2 / (2 * 0.5**2))
+    R_curv_opt = -alpha_opt * np.exp(-(r_opt - R_opt)**2 / (2 * 0.5**2))
+    
+    ax6.plot(r_opt, phi_opt, 'b-', label='φ field')
+    ax6.plot(r_opt, pi_opt*10, 'r-', label='π field (×10)')  
+    ax6.plot(r_opt, R_curv_opt, 'g-', label='R curvature')
+    ax6.axvline(R_opt, color='k', linestyle='--', label=f'R = {R_opt}')
+    ax6.set_xlabel('Radius r')
+    ax6.set_ylabel('Field amplitude')
+    ax6.set_title('Optimal Field Configuration')
+    ax6.legend()
+    ax6.grid(True)
+    
+    # Panel 7: Parameter sweep summary
+    ax7 = axes[2,0]
+    param_names = ['μ', 'λ', 'α', 'R', 'τ']
+    optimal_vals = [
+        best_creation['mu'],
+        best_creation['lambda'], 
+        best_creation['alpha'],
+        best_creation['R'],
+        best_creation['tau']
+    ]
+    bars = ax7.bar(param_names, optimal_vals, color=['blue', 'green', 'red', 'orange', 'purple'])
+    ax7.set_ylabel('Parameter Value')
+    ax7.set_title('Optimal Parameter Set')
+    
+    # Add value labels on bars
+    for bar, val in zip(bars, optimal_vals):
+        height = bar.get_height()
+        ax7.text(bar.get_x() + bar.get_width()/2., height + height*0.01,
+                f'{val:.3f}', ha='center', va='bottom')
+    
+    # Panel 8: Efficiency metrics
+    ax8 = axes[2,1]
+    metrics = ['Energy Ratio', 'Creation Rate', 'Efficiency']
+    values = [
+        feasibility['energy_ratio'],
+        feasibility['creation_rate'] * 1e12,  # Scale for visibility
+        feasibility['efficiency'] * 1e12      # Scale for visibility  
+    ]
+    colors = ['green' if feasibility['energy_ratio'] >= 1 else 'red', 'blue', 'orange']
+    
+    bars = ax8.bar(metrics, values, color=colors, alpha=0.7)
+    ax8.set_ylabel('Metric Value')
+    ax8.set_title('Replication Efficiency')
+    ax8.set_yscale('log')
+    
+    # Panel 9: Recommendations
+    ax9 = axes[2,2]
+    ax9.text(0.1, 0.9, 'REPLICATION ANALYSIS SUMMARY', fontsize=14, fontweight='bold', transform=ax9.transAxes)
+    
+    summary_text = f"""
+Optimal Parameters:
+• μ = {best_creation['mu']:.3f} (polymer scale)
+• λ = {best_creation['lambda']:.3f} (coupling)  
+• α = {best_creation['alpha']:.1f} (curvature)
+• R = {best_creation['R']:.1f} (bubble size)
+
+Feasibility: {feasibility['recommendation']}
+Energy Ratio: {feasibility['energy_ratio']:.2f}
+Creation Rate: {feasibility['creation_rate']:.2e}
+
+Next Steps:
+• Refine μ ∈ [0.15, 0.30]
+• Test λ ∈ [0.005, 0.020]  
+• Extend α range to 5.0
+• Integrate with JAX/CMA-ES
+"""
+    
+    ax9.text(0.05, 0.8, summary_text, fontsize=10, transform=ax9.transAxes, 
+             verticalalignment='top', fontfamily='monospace')
+    ax9.set_xlim(0, 1)
+    ax9.set_ylim(0, 1)
+    ax9.axis('off')
+    
+    plt.tight_layout(rect=[0, 0, 1, 0.96])
+    plt.show()
+    
+    return fig
+
+# Example usage for replication analysis
+def run_replication_analysis_example():
+    """
+    Run complete matter replication analysis with optimal parameter ranges.
+    """
+    print("Running Matter Replication Analysis...")
+    print("=" * 50)
+    
+    # Refined parameter ranges around optimal region
+    mu_vals = [0.15, 0.20, 0.25, 0.30]
+    tau_vals = [0.5, 1.0, 1.5, 2.0]  
+    R_vals = [0.5, 1.0, 1.5, 2.0]
+    lambda_vals = [0.005, 0.010, 0.015, 0.020]
+    alpha_vals = [1.5, 2.0, 2.5, 3.0]
+    
+    # Run analysis
+    analysis = matter_replication_analysis(mu_vals, tau_vals, R_vals, lambda_vals, alpha_vals)
+    
+    # Feasibility study
+    feasibility = replicator_feasibility_study(analysis['best_creation_params'])
+    
+    # Visualization
+    fig = visualize_replication_analysis(analysis, feasibility)
+    
+    print("\nAnalysis Complete!")
+    print(f"Best creation parameters: {analysis['best_creation_params']}")
+    print(f"Feasibility: {feasibility['recommendation']}")
+    
+    return analysis, feasibility, fig

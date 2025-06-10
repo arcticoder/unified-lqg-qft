@@ -444,3 +444,239 @@ def target_flux_achievement_status(target_flux: float = 1e-25) -> dict:
     }
     
     return status
+
+# ============================================================================
+# MATTER CREATION EXTENSIONS (June 2025)
+# Integration with matter_polymer.py for replicator physics
+# ============================================================================
+
+def matter_creation_hamiltonian(phi: np.ndarray, pi: np.ndarray, 
+                               R_curvature: np.ndarray, f_metric: np.ndarray,
+                               mu: float, lam: float, dr: float) -> float:
+    """
+    Complete matter creation Hamiltonian with polymer corrections and curvature coupling.
+    
+    H = H_matter + H_interaction
+    where:
+    - H_matter = 1/2 [(sin(μπ)/μ)² + (∇φ)² + m²φ²]  
+    - H_interaction = λ√f R φ²
+    
+    Based on parameter sweep optimal values:
+    μ ≈ 0.20, λ ≈ 0.01
+    
+    :param phi: Scalar field configuration
+    :param pi: Conjugate momentum field
+    :param R_curvature: Ricci scalar curvature
+    :param f_metric: Spatial metric determinant
+    :param mu: Polymer parameter (optimal: 0.20)
+    :param lam: Matter-geometry coupling (optimal: 0.01)
+    :param dr: Spatial step size
+    :return: Total integrated Hamiltonian
+    """
+    # Matter Hamiltonian with polymer corrections
+    pi_corrected = polymer_correction(pi, mu)
+    kinetic = 0.5 * pi_corrected**2
+    
+    # Gradient term (central differences)
+    grad_phi = (np.roll(phi, -1) - np.roll(phi, 1)) / (2.0 * dr)
+    gradient = 0.5 * grad_phi**2
+    
+    H_matter = kinetic + gradient
+    
+    # Interaction Hamiltonian  
+    sqrt_f = np.sqrt(np.abs(f_metric))
+    H_interaction = lam * sqrt_f * R_curvature * phi**2
+    
+    # Integrate over space
+    return np.sum(H_matter + H_interaction) * dr
+
+def matter_creation_rate(phi: np.ndarray, pi: np.ndarray,
+                        R_curvature: np.ndarray, lam: float, dr: float) -> float:
+    """
+    Instantaneous matter creation rate from curvature-matter coupling.
+    
+    Ṅ(t) = 2λ ∑_i R_i(t) φ_i(t) π_i(t)
+    
+    :param phi: Scalar field configuration
+    :param pi: Conjugate momentum field  
+    :param R_curvature: Ricci scalar curvature
+    :param lam: Matter-geometry coupling strength
+    :param dr: Spatial step size
+    :return: Instantaneous creation rate dN/dt
+    """
+    creation_density = 2.0 * lam * R_curvature * phi * pi
+    return np.sum(creation_density) * dr
+
+def optimal_replicator_parameters() -> dict:
+    """
+    Return optimal parameter set for matter replication based on sweep analysis.
+    
+    These parameters minimize net annihilation and maximize matter creation
+    efficiency in the polymer-quantized spacetime.
+    
+    :return: Dictionary of optimal parameters
+    """
+    return {
+        'lambda': 0.01,      # Matter-geometry coupling strength
+        'mu': 0.20,          # Polymer scale parameter
+        'alpha': 2.0,        # Curvature pulse strength  
+        'R_bubble': 1.0,     # Optimal bubble radius
+        'gamma': 1.0,        # Constraint penalty weight
+        'kappa': 0.1,        # Curvature cost weight
+        'mass': 0.0,         # Massless scalar field
+        'dt': 0.01,          # Time step for evolution
+        'dr': 0.1,           # Spatial step for discretization
+    }
+
+def replicator_objective_function(delta_N: float, constraint_anomaly: float,
+                                 curvature_cost: float, gamma: float = 1.0,
+                                 kappa: float = 0.1) -> float:
+    """
+    Optimization objective for matter replication.
+    
+    J = ΔN - γA - κC
+    
+    To be maximized over parameter space {λ, μ, α, R_bubble}.
+    
+    :param delta_N: Net particle number change
+    :param constraint_anomaly: Einstein constraint violation
+    :param curvature_cost: Integrated curvature penalty
+    :param gamma: Constraint weight
+    :param kappa: Curvature weight  
+    :return: Objective function value (to maximize)
+    """
+    return delta_N - gamma * constraint_anomaly - kappa * curvature_cost
+
+def refined_parameter_ranges() -> dict:
+    """
+    Refined parameter ranges around optimal region for focused search.
+    
+    :return: Dictionary of parameter ranges for optimization
+    """
+    return {
+        'mu': np.linspace(0.15, 0.30, 16),         # Around optimal μ = 0.20
+        'lambda': np.linspace(0.005, 0.020, 16),   # Around optimal λ = 0.01  
+        'alpha': np.linspace(1.5, 5.0, 15),        # Extended curvature range
+        'R_bubble': np.linspace(0.5, 3.0, 11),     # Extended bubble size range
+    }
+
+class ReplicatorSimulation:
+    """
+    Complete matter replication simulation with polymer quantization.
+    """
+    
+    def __init__(self, params: dict = None):
+        """Initialize with optimal or custom parameters."""
+        self.params = params or optimal_replicator_parameters()
+        self.mu = self.params['mu']
+        self.lam = self.params['lambda']
+        self.dr = self.params['dr']
+        self.dt = self.params['dt']
+        
+    def evolve_fields(self, phi_init: np.ndarray, pi_init: np.ndarray,
+                     R_curvature: np.ndarray, f_metric: np.ndarray,
+                     n_steps: int = 1000) -> dict:
+        """
+        Evolve matter fields under polymer Hamiltonian dynamics.
+        
+        ∂φ/∂t = sin(μπ)/μ
+        ∂π/∂t = ∇²φ - λ√f R φ
+        
+        :param phi_init: Initial scalar field
+        :param pi_init: Initial momentum field  
+        :param R_curvature: Ricci curvature (time-dependent)
+        :param f_metric: Metric determinant
+        :param n_steps: Number of evolution steps
+        :return: Evolution results
+        """
+        phi = phi_init.copy()
+        pi = pi_init.copy()
+        
+        # Storage for analysis
+        N_creation = np.zeros(n_steps)
+        H_total = np.zeros(n_steps)
+        
+        for step in range(n_steps):
+            # Hamiltonian evolution
+            # ∂φ/∂t = ∂H/∂π = sin(μπ)/μ
+            phi_dot = polymer_correction(pi, self.mu)
+            
+            # ∂π/∂t = -∂H/∂φ = ∇²φ - 2λ√f R φ  
+            laplacian_phi = (np.roll(phi, -1) - 2*phi + np.roll(phi, 1)) / self.dr**2
+            interaction_force = -2 * self.lam * np.sqrt(np.abs(f_metric)) * R_curvature * phi
+            pi_dot = laplacian_phi + interaction_force
+            
+            # Update fields
+            phi += phi_dot * self.dt
+            pi += pi_dot * self.dt
+            
+            # Compute diagnostics
+            N_creation[step] = matter_creation_rate(phi, pi, R_curvature, self.lam, self.dr)
+            H_total[step] = matter_creation_hamiltonian(phi, pi, R_curvature, f_metric,
+                                                       self.mu, self.lam, self.dr)
+        
+        return {
+            'phi_final': phi,
+            'pi_final': pi, 
+            'creation_rate': N_creation,
+            'hamiltonian': H_total,
+            'net_creation': np.trapz(N_creation, dx=self.dt),
+            'energy_final': H_total[-1]
+        }
+    
+    def parameter_optimization(self, phi_init: np.ndarray, pi_init: np.ndarray,
+                              R_curvature: np.ndarray, f_metric: np.ndarray) -> dict:
+        """
+        Optimize parameters for maximum matter creation.
+        
+        :param phi_init: Initial scalar field
+        :param pi_init: Initial momentum field
+        :param R_curvature: Ricci curvature profile  
+        :param f_metric: Metric determinant
+        :return: Optimization results
+        """
+        ranges = refined_parameter_ranges()
+        best_objective = -np.inf
+        best_params = None
+        best_result = None
+        
+        print("Optimizing replicator parameters...")
+        total_combinations = len(ranges['mu']) * len(ranges['lambda'])
+        count = 0
+        
+        for mu in ranges['mu']:
+            for lam in ranges['lambda']:
+                count += 1
+                print(f"\rProgress: {count}/{total_combinations} (μ={mu:.3f}, λ={lam:.3f})", end="")
+                
+                # Update parameters
+                self.mu = mu
+                self.lam = lam
+                
+                # Run simulation
+                result = self.evolve_fields(phi_init, pi_init, R_curvature, f_metric, n_steps=500)
+                
+                # Compute objective
+                delta_N = result['net_creation']
+                # Simplified constraint and curvature costs
+                anomaly = np.std(result['hamiltonian'])  # Energy conservation violation
+                cost = np.sum(np.abs(R_curvature))
+                
+                objective = replicator_objective_function(delta_N, anomaly, cost)
+                
+                if objective > best_objective:
+                    best_objective = objective
+                    best_params = {'mu': mu, 'lambda': lam}
+                    best_result = result
+        
+        print(f"\nOptimal parameters: μ={best_params['mu']:.3f}, λ={best_params['lambda']:.3f}")
+        print(f"Best objective: {best_objective:.3f}")
+        print(f"Net creation: {best_result['net_creation']:.3e}")
+        
+        return {
+            'best_params': best_params,
+            'best_objective': best_objective,
+            'best_result': best_result,
+            'optimal_mu': best_params['mu'],
+            'optimal_lambda': best_params['lambda']
+        }
