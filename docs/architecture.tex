@@ -136,12 +136,32 @@ where $\mathbf{r} = (x,y,z)$ and the LQG component includes polymer corrections:
 f_{\text{LQG}}(r) = 1 - \frac{2M}{r} + \frac{\mu^2 M^2}{6r^4}
 \end{equation}
 
+\textbf{Multi-GPU + QEC Integration}:
+The 3D implementation includes advanced computational features:
+\begin{itemize}
+\item \textbf{JAX pmap Parallelization}: Grid chunks distributed across GPU devices
+\item \textbf{Quantum Error Correction}: Stabilizer-based error detection and correction
+\item \textbf{Linear GPU Scaling}: Demonstrated performance scaling with device count
+\item \textbf{Memory Optimization}: Efficient handling of large 3D field arrays
+\item \textbf{Real-time Monitoring}: GPU utilization and convergence tracking
+\end{itemize}
+
+Multi-GPU evolution is orchestrated via:
+\begin{align}
+\text{Grid Partition:} &\quad \phi_{\text{3D}} \to \{\phi_{\text{chunk}_i}\}_{i=1}^{N_{\text{GPU}}} \\
+\text{Parallel Evolution:} &\quad \phi_{\text{chunk}_i} = \texttt{pmap}(\text{evolution\_step})(\phi_{\text{chunk}_i}) \\
+\text{QEC Application:} &\quad \phi_{\text{chunk}_i} \to \texttt{apply\_qec}(\phi_{\text{chunk}_i}) \\
+\text{Synchronization:} &\quad \{\phi_{\text{chunk}_i}\} \to \phi_{\text{3D}}
+\end{align}
+
 Key functions:
 \begin{itemize}
 \item \texttt{compute\_3d\_laplacian(phi, dx)} - Full 3D finite-difference Laplacian
 \item \texttt{metric\_3d(grid, params)} - Vectorized 3D metric computation
 \item \texttt{ricci\_3d(f3d, dx)} - 3D discrete Ricci scalar
 \item \texttt{evolution\_step\_3d(phi, pi, f3d, R3d, ...)} - 3D field evolution
+\item \texttt{step\_chunk\_pmap(phi\_chunk, ...)} - Multi-GPU parallel evolution
+\item \texttt{apply\_qec(phi\_chunk)} - Quantum error correction application
 \end{itemize}
 
 \section{Unified Pipeline Architecture}
