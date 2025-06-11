@@ -1,0 +1,95 @@
+{
+  "grid_performance": {
+    "64": {
+      "feasible": true,
+      "stable": "False",
+      "converged": true,
+      "performance_score": 0.08939448885153972,
+      "memory_efficiency": 0.00019040703773498535
+    },
+    "128": {
+      "feasible": true,
+      "stable": "False",
+      "converged": "False",
+      "performance_score": 0.08575296711251532,
+      "memory_efficiency": 4.455447196960449e-06
+    },
+    "256": {
+      "feasible": true,
+      "stable": "False",
+      "converged": "False",
+      "performance_score": 0.0880458956119192,
+      "memory_efficiency": 0.0001737463753670454
+    }
+  },
+  "scalability_analysis": {
+    "grid_sizes": [
+      64,
+      128,
+      256
+    ],
+    "n_points": [
+      262144,
+      2097152,
+      16777216
+    ],
+    "computation_times": [
+      2.9324402809143066,
+      24.455736875534058,
+      190.5508017539978
+    ],
+    "memory_usage": [
+      0.04874420166015625,
+      0.009124755859375,
+      2.846660614013672
+    ],
+    "performance_scores": [
+      0.08939448885153972,
+      0.08575296711251532,
+      0.0880458956119192
+    ],
+    "time_scaling_exponent": 1.0036550233442931,
+    "memory_scaling_exponent": 0.7180292616572698,
+    "parallel_efficiency": [
+      262144.0,
+      251465.4549686597,
+      258189.33086156804
+    ],
+    "scalability_score": 257266.26194340922
+  },
+  "performance_benchmarks": {
+    "64": {
+      "grid_size": 64,
+      "n_points": 262144,
+      "total_time": 2.9324402809143066,
+      "config_time": 2.8785250186920166,
+      "calc_time": 0.013002395629882812,
+      "memory_used_gb": 0.04874420166015625,
+      "points_per_second": 89394.48885153972,
+      "memory_per_point_mb": 0.00019040703773498535,
+      "performance_score": 0.08939448885153972
+    },
+    "128": {
+      "grid_size": 128,
+      "n_points": 2097152,
+      "total_time": 24.455736875534058,
+      "config_time": 24.305198907852173,
+      "calc_time": 0.12353110313415527,
+      "memory_used_gb": 0.009124755859375,
+      "points_per_second": 85752.96711251531,
+      "memory_per_point_mb": 4.455447196960449e-06,
+      "performance_score": 0.08575296711251532
+    },
+    "256": {
+      "grid_size": 256,
+      "n_points": 16777216,
+      "total_time": 190.5508017539978,
+      "config_time": 189.4406132698059,
+      "calc_time": 1.0800082683563232,
+      "memory_used_gb": 2.846660614013672,
+      "points_per_second": 88045.8956119192,
+      "memory_per_point_mb": 0.0001737463753670454,
+      "performance_score": 0.0880458956119192
+    }
+  }
+}
