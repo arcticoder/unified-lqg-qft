@@ -1,0 +1,45 @@
+{
+  "cross_section_analysis": {
+    "max_enhancement": 0.9999999983333336,
+    "optimal_energy_GeV": 0.1,
+    "enhancement_at_1GeV": 0.999999832579432,
+    "enhancement_at_10GeV": 0.9999832615308865
+  },
+  "field_scan_analysis": {
+    "max_enhancement_ratio": 1.5456296346187968,
+    "optimal_field_V_per_m": 1325711365590.1108,
+    "threshold_reduction_percent": 0.0
+  },
+  "uncertainty_quantification": {
+    "pair_production_rate": {
+      "mean": 1.566425888672137e+29,
+      "std": 5.5737727865753e+29,
+      "median": 1.4325741394686542e+22,
+      "percentile_5": -5.6269167148407515e+26,
+      "percentile_95": 1.0496215415602329e+30
+    },
+    "cross_section_enhancement": {
+      "mean": 0.9997932824910446,
+      "std": 0.0005548642699038954,
+      "median": 0.9999986025161338,
+      "percentile_5": 0.998608129392666,
+      "percentile_95": 0.999999992831971
+    },
+    "threshold_reduction": {
+      "mean": 0.1722033701573606,
+      "std": 0.2986852983810369,
+      "median": 3.577396138039476e-05,
+      "percentile_5": -0.10381604946881148,
+      "percentile_95": 0.7990104098760173
+    }
+  },
+  "configuration": {
+    "gauge_polymer_scale": 0.0005,
+    "gravity_polymer_scale": 0.001,
+    "gauge_group": "SU3",
+    "energy_range_GeV": [
+      0.1,
+      100.0
+    ]
+  }
+}
