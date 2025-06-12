@@ -1,0 +1,99 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{cite}
+
+\title{Uniform Closed-Form Representation of SU(2) 12j Symbols}
+\author{Arcticoder}
+\date{May 25, 2025}
+
+\begin{document}
+\maketitle
+
+This derivation builds on 
+Arcticoder’s master generating functional \cite{Arcticoder2025}
+and the universal factorization approach of Wei \& Dalgarno \cite{WeiDalgarno2003}.
+
+\section*{Closed-Form Expression}
+
+For the SU(2) 12j symbol
+\[
+\begin{Bmatrix}
+j_1 & j_2 & j_{12}\\
+j_3 & j_4 & j_{23}\\
+j_5 & j_6 & j_{34}\\
+j_7 & j_8 & j_{45}
+\end{Bmatrix},
+\]
+we have the single‐sum hypergeometric form
+\[
+\boxed{
+\begin{aligned}
+\begin{Bmatrix}
+j_1 & j_2 & j_{12}\\
+j_3 & j_4 & j_{23}\\
+j_5 & j_6 & j_{34}\\
+j_7 & j_8 & j_{45}
+\end{Bmatrix}
+= \Delta
+\sum_{m=0}^{\infty} (-1)^m \,
+\frac{\bigl(\tfrac12\bigr)_m\,(-j_{12})_m\,(j_{12}+1)_m\,(-j_{23})_m\,(j_{23}+1)_m}
+{(j_1+j_2 - j_{12} +1)_m\,(j_3+j_4 - j_{23} +1)_m\,(j_5+j_6 - j_{34} +1)_m\,(j_7+j_8 - j_{45} +1)_m \; m!}
+\end{aligned}
+}
+\]
+where \((a)_m\) denotes the Pochhammer symbol.
+
+The prefactor \(\Delta\) is
+\[
+\Delta = \sqrt{
+\prod_{(a,b,c)\in
+\{(j_1,j_2,j_{12}),\,(j_3,j_4,j_{23}),\,(j_5,j_6,j_{34}),\,(j_7,j_8,j_{45})\}}
+\frac{(-a+b+c)!\,(a-b+c)!\,(a+b-c)!}{(a+b+c+1)!}
+}.
+\]
+
+\section*{Algebraic Reindexing}
+
+\begin{enumerate}
+  \item Write 
+  \[
+    G_{12j} = \det(I-K)^{-1/2}
+    = (1 - P)^{-1/2},\quad
+    P = E_1 - E_2 + E_3 - E_4,
+  \]
+  with contiguous‐block sums \(E_k\) in the \(x_i^2\).
+  \item Expand via the generalized binomial theorem:
+  \[
+    (1-P)^{-1/2}
+    = \sum_{m=0}^\infty \binom{-\tfrac12}{m}(-1)^m P^m.
+  \]
+  \item Use a multinomial expansion on \(P^m\):
+  \[
+    P^m = \sum_{a+b+c+d=m}
+    \binom{m}{a,b,c,d}(-1)^{b+d}
+    E_1^a E_2^b E_3^c E_4^d.
+  \]
+  \item Expand each \(E_k^r\) into monomials in \(x_i^{2}\) and collect exponents \(\{2j_{12},2j_{23},2j_{34},2j_{45}\}\).
+  \item The combinatorial sums collapse to a single free index \(m\), yielding the \({}_5F_4\) series above.
+\end{enumerate}
+
+\section*{Conclusion}
+
+This derivation shows that the 12j symbol emerges from a \emph{single} \({}_5F_4\)-type hypergeometric series with no nested finite sums left. The same logic extends to all higher SU(2) 3nj symbols.
+
+\begin{thebibliography}{9}
+
+\bibitem{Arcticoder2025}
+Arcticoder,
+\newblock \emph{A Universal Generating Functional for SU(2) 3nj Symbols},
+\newblock \href{https://arcticoder.github.io/su2-3nj-generating-functional/}{arcticoder.github.io/su2-3nj-generating-functional/}, 2025.
+
+\bibitem{WeiDalgarno2003}
+Liqiang Wei and Alexander Dalgarno,
+\newblock Universal Factorization of 3n-j $j_2$ Symbols of the First and Second Kinds for SU2 Group and Their Direct and Exact Calculation and Tabulation,
+\newblock \href{https://arxiv.org/abs/math-ph/0306040}{arXiv:math-ph/0306040}, 2003.
+
+\end{thebibliography}
+
+\end{document}

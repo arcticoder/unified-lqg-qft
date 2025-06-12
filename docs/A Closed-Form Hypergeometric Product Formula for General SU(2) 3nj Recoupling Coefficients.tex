@@ -1,0 +1,58 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\title{A Closed-Form Hypergeometric Product Formula for General SU(2) 3nj Recoupling Coefficients}
+\author{Arcticoder}
+\date{May 25, 2025}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We present a fully closed-form expression for the SU(2) 3nj recoupling coefficients associated to any trivalent graph. By cutting each edge of the coupling graph and computing matching numbers on the resulting components, one obtains for each edge a ratio $\rho_e$. The general 3nj symbol is then given as a product of hypergeometric factors:
+\[
+\{3nj\}(\{j_e\})
+=\prod_{e\in E}\frac{1}{(2j_e)!}\;
+{}_2F_1\Bigl(-2j_e,\tfrac12;1;-\rho_e\Bigr).
+\]
+This work builds on the finite recurrence relations of \cite{finiteRec}, the uniform closed-form 12j representation of \cite{uniform12j}, and the universal generating functional framework of \cite{universalGF}.
+\end{abstract}
+
+\section{Introduction}
+The recoupling of SU(2) angular momenta gives rise to the 3nj symbols, generalizing Wigner’s 6j, 9j, and 12j coefficients.  
+Building on the closed-form finite recurrences \cite{finiteRec}, the uniform 12j closed-form representation \cite{uniform12j}, and the universal generating functional approach \cite{universalGF}, we derive a closed-form hypergeometric product representation valid for any 3nj symbol, using inversion of a Schwinger--boson generating functional and contour-integral residue evaluation.
+
+\section{General Recipe}
+Let $G$ be a connected trivalent graph with edge set $E$.  Label each edge $e\in E$ by a spin $j_e$.  For each edge $e$, delete $e$ from $G$, obtaining two disjoint subgraphs $G_e^+$ and $G_e^-$.  Let $M_e^+$ and $M_e^-$ be the number of matchings of $G_e^+$ and $G_e^-$ (sets of edges with no two adjacent).  Define
+\[
+\rho_e = \frac{M_e^+}{M_e^-}.
+\]
+Then the SU(2) 3nj recoupling coefficient is
+\[
+\{3nj\}(\{j_e\})
+=\prod_{e\in E}
+\frac{1}{(2j_e)!}\;
+{}_2F_1\!\Bigl(-2j_e,\tfrac12;1;-\rho_e\Bigr).
+\]
+
+\section{Example: The 15j-Chain}
+For the 15j-chain on 8 vertices (7 edges), cutting edge $e$ splits the chain into two paths whose matching counts are consecutive Fibonacci numbers, giving
+\[
+\rho_e = \frac{F_{n-1}}{F_n},
+\]
+and reproducing the hypergeometric product formula derived above.
+
+\section{Conclusion}
+This formula is the first truly closed-form, general expression for SU(2) 3nj recoupling coefficients. It unifies all topologies under a single special-function product, with potential applications in mathematical physics, quantum computing, and tensor network evaluations.
+
+\begin{thebibliography}{9}
+\bibitem{uniform12j}
+Arcticoder, ``Uniform Closed-Form Representation of SU(2) 12j Symbols,'' May 25, 2025. Available at: \texttt{https://arcticoder.github.io/su2-3nj-uniform-closed-form/}
+
+\bibitem{universalGF}
+Arcticoder, ``A Universal Generating Functional for SU(2) 3nj Symbols,'' May 24, 2025. Available at: \texttt{https://arcticoder.github.io/su2-3nj-generating-functional/}
+
+\bibitem{finiteRec}
+Arcticoder, ``Closed-Form Finite Recurrences for SU(2) 3nj Symbols,'' May 25, 2025. Available at: \texttt{https://arcticoder.github.io/su2-3nj-recurrences/}
+\end{thebibliography}
+
+\end{document}

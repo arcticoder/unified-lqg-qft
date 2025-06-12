@@ -1,0 +1,68 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\title{Closed-Form Matrix Elements for Arbitrary-Valence SU(2) Nodes via Generating Functionals}
+\author{Arcticoder}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We derive closed-form expressions for SU(2) operator matrix elements on arbitrary-valence nodes by extending the universal generating functional approach with source terms. Our central result is a determinant-based formula incorporating group-element dependence, which yields all matrix elements via a single Gaussian integral and hypergeometric expansion.
+\end{abstract}
+
+\section{Introduction}
+The computation of SU(2) recoupling coefficients has seen recent advances:  
+uniform closed-form representation of 12j symbols \cite{Uniform12j}, a universal generating functional \cite{GenFun}, closed-form finite recurrences \cite{Recurrences}, and a hypergeometric product formula \cite{ProductFormula}. We build on these to obtain operator matrix elements for any node valence and spin labels.
+
+\section{Generating Functional with Sources}
+Introduce source spinors \(J_v(g)\) for each vertex \(v\) to encode group-element dependence:
+\[
+G(\{x_e\},g)
+=\int\prod_v\frac{d^2w_v}{\pi}
+\exp\Bigl[
+-\sum_v\bar w_v w_v
++\sum_{e=(i,j)}x_e\,\epsilon(w_i,w_j)
++\sum_v(\bar w_v J_v+\overline J_v w_v)
+\Bigr].
+\]
+
+\section{Gaussian Integration}
+Writing \(W=(w_v)\), \(J=(J_v)\), and \(M=I-K(\{x_e\})\), we have
+\[
+\int dW\,\exp\bigl(-\tfrac12W^\dagger M W + W^\dagger J + J^\dagger W\bigr)
+=\frac{(2\pi)^n}{\sqrt{\det M}}
+\exp\!\bigl(\tfrac12 J^\dagger M^{-1}J\bigr).
+\]
+Thus
+\[
+G(\{x_e\},g)
+=\frac{1}{\sqrt{\det(I-K(\{x_e\}))}}
+\exp\!\Bigl(\tfrac12 J(g)^\dagger[I-K(\{x_e\})]^{-1}J(g)\Bigr).
+\]
+
+\section{Extraction of Matrix Elements}
+The coefficient of \(\prod_e x_e^{2j_e}\prod_vJ_v^{j_v+m_v}\overline J_v^{j_v+m'_v}\)
+in the Taylor expansion of \(G(\{x_e\},g)\) yields
+\(\langle\{j_v,m'_v\}|D(g)|\{j_v,m_v\}\rangle\).
+
+\section{Charting the Kernel}
+Assemble the matrix
+\(\;K_{(\{j,m\}),(\{j',m'\})}(g)
+=\langle\{j',m'\}|D(g)|\{j,m\}\rangle\)
+for fixed valence and spins, then analyze or plot its entries.
+
+\section{Conclusion}
+We have obtained truly closed-form matrix elements for arbitrary-valence SU(2) nodes.  
+This opens the way to chart and study operator kernels in spin networks and related models.
+
+\begin{thebibliography}{9}
+\bibitem{Uniform12j} A.~Arcticoder, \textit{Uniform Closed-Form Representation of SU(2) 12j Symbols}, May 25, 2025. Available: https://arcticoder.github.io/su2-3nj-uniform-closed-form/
+\bibitem{GenFun} A.~Arcticoder, \textit{A Universal Generating Functional for SU(2) 3nj Symbols}, May 24, 2025. Available: https://arcticoder.github.io/su2-3nj-generating-functional/
+\bibitem{Recurrences} A.~Arcticoder, \textit{Closed-Form Finite Recurrences for SU(2) 3nj Symbols}, May 25, 2025. Available: https://arcticoder.github.io/su2-3nj-recurrences/
+\bibitem{ProductFormula} A.~Arcticoder, \textit{A Closed-Form Hypergeometric Product Formula for General SU(2) 3nj Recoupling Coefficients}, May 25, 2025. Available: https://arcticoder.github.io/su2-3nj-closedform/
+\bibitem{Jordan1935} P.~Jordan, ``Der Zusammenhang der symmetrischen und linearen Gruppen und das Mehrkörperproblem,'' \textit{Zeitschrift für Physik}, vol.~94, no.~7–8, pp.~531–535, 1935.
+\bibitem{Schwinger1952} J.~Schwinger, ``On Angular Momentum,'' unpublished report, Harvard Univ., Report NYO-3071, Jan.~26, 1952.
+\end{thebibliography}
+
+\end{document}

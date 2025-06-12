@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\title{Closed-Form Finite Recurrences for SU(2) 3nj Symbols}
+\author{Arcticoder}
+\date{May 25, 2025}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Building on the universal closed-form hypergeometric representation of SU(2) 3nj symbols \cite{arcticoder2025}, we present a finite set of algebraic three-term recurrence relations in the spin labels \(j_k\), together with minimal boundary data, which uniquely determine any SU(2) \(3nj\) recoupling coefficient. These recurrences allow computation of all \(3nj\) symbols in closed form without nested sums of \(6j\) symbols.
+\end{abstract}
+
+\section{General Recurrence System}
+For each edge \(k\) in the coupling tree with Schwinger variable \(x_k\), define
+\[
+\Delta_0^{(k)} = \det\bigl(I - K(\mathbf x)\bigr)\big|_{x_k=0},
+\quad
+\Delta_1^{(k)} = \det\bigl(I - K(\mathbf x)\bigr)\bigl|_{\substack{\text{rows/cols of edge }k\\\text{removed}}},
+\]
+and let
+\[
+G(\mathbf x) = \sum_{\{j\}} T(j_1,\dots,j_E)\prod_{\ell=1}^E x_\ell^{2j_\ell}.
+\]
+The closed three-term recurrence in the label \(j_k\) follows from
+\[
+\Delta_0^{(k)}(\mathbf x_{\ne k})\,G(\mathbf x)
+= x_k^2\,\Delta_1^{(k)}(\mathbf x_{\ne k})\,G(\mathbf x).
+\]
+Equating coefficients of \(\prod_\ell x_\ell^{2j_\ell}\) yields
+\[
+\sum_{\mu}a_{\mu}\,
+T\bigl(j_k,\mathbf j_{\ne k}-\mu\bigr)
+\;=\;
+\sum_{\nu}b_{\nu}\,
+T\bigl(j_k-1,\mathbf j_{\ne k}-\nu\bigr),
+\]
+where \(a_{\mu},b_{\nu}\) are the expansion coefficients of \(\Delta_0^{(k)}\) and \(\Delta_1^{(k)}\) in the other variables.
+
+\section{Seed Data}
+For each \(k\), the seed values
+\[
+T(0,\mathbf j_{\ne k})
+\]
+are given by the SU(2) \(3(n-1)j\) symbol on the tree with edge \(k\) removed, bottoming out at the Racah \(6j\) case. These seeds, together with the recurrences, uniquely determine every \(3nj\) coefficient.
+
+\bibliographystyle{plain}
+\begin{thebibliography}{1}
+\bibitem{arcticoder2025}
+Arcticoder,
+\emph{Universal Closed-Form Hypergeometric Representation of SU(2) 3nj Symbols},
+\url{https://arcticoder.github.io/su2-3nj-uniform-closed-form/},
+2025.
+\end{thebibliography}
+
+\end{document}
