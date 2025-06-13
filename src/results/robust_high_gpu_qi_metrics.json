@@ -1,0 +1,11 @@
+{
+  "total_analysis_time": 216.57345581054688,
+  "peak_memory_gb": 8.892502016,
+  "memory_efficiency_percent": 103.52787738908175,
+  "estimated_gpu_utilization": 95.0,
+  "operations_per_second": 20425771.863148946,
+  "total_violations_found": 0,
+  "fields_analyzed": 3,
+  "target_achieved": true,
+  "week_scale_analysis": true
+}

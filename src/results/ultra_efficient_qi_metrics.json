@@ -1,0 +1,11 @@
+{
+  "total_analysis_time": 4734.490442752838,
+  "peak_memory_gb": 0.306519552,
+  "memory_efficiency": 3.568547810246824,
+  "estimated_gpu_utilization": 61.427419124098726,
+  "throughput_tops": 2.7214970742465284e-06,
+  "total_violations": 167772160,
+  "fields_analyzed": 3,
+  "micro_chunks_processed": 192,
+  "target_achieved": false
+}
