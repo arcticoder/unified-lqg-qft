@@ -1,5 +1,15 @@
 # Unified LQG-QFT Framework Supporting LQG FTL Metric Engineering
 
+## Related Repositories
+
+- [energy](https://github.com/arcticoder/energy): Central meta-repo for all energy, quantum, and LQG-QFT research. This framework provides fundamental QFT support for the ecosystem.
+- [unified-lqg](https://github.com/arcticoder/unified-lqg): Core LQG framework that this QFT extension builds upon for polymer-corrected quantum fields.
+- [lqg-ftl-metric-engineering](https://github.com/arcticoder/lqg-ftl-metric-engineering): Primary application using exact backreaction coupling β = 1.9443254780147017 for zero-exotic-energy FTL.
+- [lqg-cosmological-constant-predictor](https://github.com/arcticoder/lqg-cosmological-constant-predictor): Uses exact backreaction coefficient and Einstein coupling from this framework.
+- [warp-bubble-qft](https://github.com/arcticoder/warp-bubble-qft): Integrates polymer-corrected QFT for LQG-enhanced warp bubble configurations.
+
+All repositories are part of the [arcticoder](https://github.com/arcticoder) ecosystem and link back to the energy framework for unified documentation and integration.
+
 A framework integrating Loop Quantum Gravity (LQG) and Quantum Field Theory (QFT) providing **foundational quantum field theory support** for the LQG FTL Metric Engineering system. Enables **zero exotic energy FTL technology** through polymer-corrected quantum fields with **24.2 billion× energy enhancement** and exact backreaction coupling.
 
 ## LQG FTL Metric Engineering Integration ✨
